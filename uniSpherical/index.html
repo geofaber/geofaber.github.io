@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Example programs and data</title>
+<title>UniSpherical, examples</title>
 <style>
 body{margin:40px auto;max-width:900px;line-height:1.4;padding:0px 10px;
 font-size:18px;font-family: sans-serif;background-color:GhostWhite}
@@ -13,15 +13,23 @@ th, td {padding: 8px;}
 </head>
 
 <body>
-<center>
-<h3>Example programs and data</h3>
-<img src="underConstruction.gif" alt="underConstruction"></center>
-</center>
+<center><img src="underConstruction.gif" alt="underConstruction"></center>
 <hr>
-<p>
 <center>
-This site is under construction, please visit again soon!
+<h3>UniSpherical Coordinate System: example programs and data</h3>
+<hr>
+<img src="w1904711.png" alt="underConstruction"></center>
 </center>
+
+<p>
+The <b>principal data set</b> used by the programs in this section consists of close to two million points, distributed over the planetary surface with local density matching the system activity level of a large class of application systems that deal with the "where of things" related the planetary human population.
+<p>
+The data set is distributed by the <a href="https://www.math.uwaterloo.ca/tsp/world/index.html">Department of Combinatorics and Optimization at the University of Waterloo</a> as a text file of 1904711 point φ, λ coordinate, in degrees to four decimal fraction digits: Thus the ground resolution of coordinates is approximately 10 meters along the meridian. The file is compressed for distribution to 11.5 megabytes.  (An animated planetography depiction of the data set can be seen <a href="http://hrid.sealug.com/planetography/w1904kOrthoRotCore.webm" TARGET="planetography"> [here]</a>.
+<p>
+Programs in this section use the same set of points, in a "flat" array of binary (8 bytes per point) <a href="https://www.lukatela.com/uniSpherical/index.html" TARGET="uniSpherical"> UniSpherical</a> coordinates. This specifies each point with an isometric ground resolution of between 5 and 15 millimeters, in a file of about 15.2 megabytes. (<b>w1904711.p8b</b> <a href="w1904711.p8b">[Downoad]</a>). The array is sorted in the numeric order of the point coordinate.
+(Note the singular: each point's location on the planetary surface is represented by a <b>single unsigned integer number</b>).
+<p>
+A short introductory program (<b>listP8b.c</b> - <a href="listP8b.c" TARGET="source">[source]</a>, <a href="listP8b">[Linux executable]</a> traverses the binary array and prints coordinates on the console. (For usage and functionalyty, see the commentary in program source).
 <hr>
 
 </body>
