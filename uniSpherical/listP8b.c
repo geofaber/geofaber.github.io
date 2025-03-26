@@ -13,7 +13,7 @@ Commonly run as:
    digiNental plate - thus anything other than digits 1-6 would represent an
    invalid coordinate. Input file is assumed to be ordered on the UniSpherical
    coordinate and contain no duplicate points. The program will report and
-   abort if any of those condition is violated.
+   abort if any of those conditiona are violated.
 
    Note that any code that reads or writes binary UniSpherical coordinates
    is endianness specific. By convention, binary coordinate filec in mixed
@@ -39,6 +39,7 @@ int main (int argc,
    nemoPtEll locEll;
    nemoPtNcs locNcs;
    int iPlate;
+   int platePop[6];
 /* -------------------------------------------------------------------------- */
    progName = strrchr(argv[0], '/');                                 /* POSIX */
    if (progName == NULL) progName = strrchr(argv[0], '\\');         /* MS Win */
@@ -57,10 +58,11 @@ int main (int argc,
    if (argc > 2) k = atoi(argv[2]);           /* limit number of output lines */
    else k = 0;                                               /* list them all */
 
+   for (n = 0; n < 6; n++) platePop[n] = 0;
+   prevPtUs8 = n = 0;
+
    m = fread(&ptUs8, sizeof(nemoPtUs8), 1, inFp);
 /* fprintf(stderr, "first read: %d\n", m); */
-
-   prevPtUs8 = n = 0;
    while (m) {
       if ((k) && (n >= k)) break;                             /* want no more */
       nemo_Us8ToNcs(ptUs8, &locNcs);
@@ -76,10 +78,18 @@ int main (int argc,
       printf("%8.4f %9.4f %016lx\n", NEMO_RAD2DEG * locEll.a[0],
                                      NEMO_RAD2DEG * locEll.a[1], ptUs8);
       n++;
+      platePop[iPlate - 1] += 1;
       m = fread(&ptUs8, sizeof(nemoPtUs8), 1, inFp);
       }
    fclose(inFp);
-   fprintf(stderr, "%s done, locations:  %d\n", progName, n);
+
+/* if whole file was traversed, produce some rudimentary statistics: */
+   if (k == 0) fprintf(stderr,
+               "plate populations: 1:%d, 2:%d, 3:%d, 4:%d, 5:%d, 6:%d\n",
+                platePop[0], platePop[1], platePop[2],
+                platePop[3], platePop[4], platePop[5]);
+
+   fprintf(stderr, "%s done, locations total:  %d\n", progName, n);
    return(0);
    }
 /* ========================================================================== */
