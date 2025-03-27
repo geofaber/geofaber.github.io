@@ -28,7 +28,15 @@ The data set is distributed by the <a href="https://www.math.uwaterloo.ca/tsp/wo
 <p>
 Programs in this section use the same set of points, in a "flat" array of binary (64-bit unsigned integer per point) <a href="https://www.lukatela.com/uniSpherical/index.html" TARGET="uniSpherical"> UniSpherical</a> coordinates. This representation yields isometric ground resolution of between 5 and 15 millimeters, in a file of about 15.2 megabytes. (<b>w1904711.p8b</b> <a href="w1904711.p8b">[Downoad]</a>). The array is ordered on the numeric point coordinate. An animated planetography depiction of the data set can be seen <a href="http://hrid.sealug.com/planetography/w1904kOrthoRotCore.webm" TARGET="planetography"> [here]</a>.
 <p>
-First in the series is a short introductory program (<b>listP8b.c</b> - <a href="listP8b.c" TARGET="source">[source]</a>, <a href="listP8b">[Linux executable]</a> that traverses the binary array and prints coordinates on the console. (For usage and functionalyty, see the commentary in program source).
+Included C language program (<b>csvToP8b.c</b> - <a href="./csvToP8b.c" TARGET="source"> [source]</a>, <a href="csvToP8b">[Linux executable]</a> reads a .csv distribution file and creates the binary UniSpherical coordinate file. (For usage and functionality of every program presented on this page, see the commentary in the program source).
+<p>
+Next in the series is a short program (<b>listP8b.c</b> - <a href="listP8b.c" TARGET="source">[source]</a>, <a href="listP8b">[Linux executable]</a> that traverses the binary array and prints coordinates on the console.
+<p>
+As mentioned in the introduction, the data set described and depicted above has been published in the context of solving the well‑known combinatorial geometry proposition: the <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem" TARGET="WikipediaTSP"> Travelling Salesman Problem</a>. As the Wikipedia article suggests, "...The nearest neighbour algorithm was one of the first algorithms used to solve the travelling salesman problem approximately. In that problem, the salesman starts at a random city and repeatedly visits the nearest city until all have been visited. The algorithm quickly yields a short tour, but usually not the optimal one".
+<p>
+The included program <b>nearNextP8bBruteForce.c</b> - <a href="nearNextP8bBruteForce.c" TARGET="source">[source]</a>, <a href="nearNext">[Linux executable]</a> creates the "nearest next" itinerary by "brute force" in situ sort: at any city the salesman finds himself along in the itinerary, he evaluates the distance to all cities not visited so far, and selects the nearest to be the next in his itinerary. The sort algorithm is extremely simple, as it does not assume any location-specific order of input coordinate array. (As above, the commentary provides the details).
+<p>
+Although the UniSpherical coordinates ensure that the distances calculation between two planetary locations is extremely fast, the program takes ... seconds to create the itinerary for 1.9 million locations ("cities").
 <hr>
 
 </body>
