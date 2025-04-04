@@ -1,1 +1,35 @@
+<!DOCTYPE html public "-//W3C//DTD HTML 3.2 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nemo Library API example programs</title>
+<style>
+body{margin:40px auto;max-width:840px;line-height:1.4;padding:0px 10px;
+font-size:18px;font-family: sans-serif;background-color:GhostWhite}
+dd{font-size:16px;color:SaddleBrown}
+th, td {padding: 8px;}
+</style>
+</head>
 
+<body>
+<center>
+<h3>Miscellaneous Nemo Library API example programs</h3>
+</center>
+<hr>
+<p>
+<b>testSzpila.c</b>: Program can be used to confirm successful library compilation and creation of the compile/build library file, as well as the ability to perform static linking of an application program with the library. <a href="./testSzpila.c" target="source"> [source]</a>, <a href="testSzpila">[Linux executable]</a>. For usage and functionality of every program presented on this page, see the commentary in the program source file preamble.
+<hr>
+<p>
+<b>ellipsoidTriangle.c</b>: Similar to the above, this program additionally confirms the ability to include compile-time utilities in the <code>scullions</code> directory of the library distribution package. <a href="./ellipsoidTriangle.c" target="source"> [source]</a>, <a href="ellipsoidTriangle">[Linux executable]</a>.
+<hr>
+<p>
+<b>uniSphericalDeltas.c</b>: Last in the triplet of "smoke-test" programs, this one lists the average and maximum positional difference that occurs when location coordinates are mapped and un‑mapped between 64-bit coordinate representation and 8-byte and 4-byte UniSpherical coordinate format using 10 million random planetary point locations. <a href="./uniSphericalDeltas.c" target="source"> [source]</a>, <a href="uniSphericalDeltas">[Linux executable]</a>.
+<hr>
+<p><b>r8bToAscii.c</b>: Program transforming UniSpherical binary coordinates into text format. Text coordinates can be UniSpherical hexadecimal numbers (in effect just increasing the row volume from 8 to 17 characters per point, but making it easier to manipulate data in a simple
+ascii text editor); or the coordinates might be converted from UniSpherical to φ and λ in decimal degrees. Number of fractional digits is selectable via a comand‑line option, to correspond to the ground resolution along the meridian to either 10 meters of one millimeter.
+<p>
+The program makes two assumptions that hold true for all UniSpherical data distributed with this collection of example programs: The binary coordinates are 64-bit unsigned integers of little‑endian variety, and that coordinates are on a near-conformal sphere related to a Wgs84 ellipsoid. If either assumption is wrong, minor source code modification will be required. <a href="./r8bToAscii.c" target="source"> [source]</a>, <a href="r8bToAscii">[Linux executable]</a>.
+</body>
+
+</html>
