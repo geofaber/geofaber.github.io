@@ -24,15 +24,36 @@ code{color:DarkSlateGray}
 
 <h3>General</h3>
 <p>
-Nemo Library project grew out of an attempt to provide anybody with the minimal required set of software tools necessary to calculate the coordinates of Point Nemo. The original 1992 calculation used the coastline coordinates available on the <a href="https://en.wikipedia.org/wiki/Digital_Chart_of_the_World" target="wikipedia">DCW CD-ROM</a> published only a year earlier.
+Nemo Library project grew out of an attempt to provide anybody with
+the minimal required set of software tools necessary to calculate the
+coordinates of Point Nemo. The original 1992 calculation used the
+coastline coordinates available on the
+<a href="https://en.wikipedia.org/wiki/Digital_Chart_of_the_World"
+target="wikipedia">DCW CD-ROM</a> published only a year earlier.
 <center><img src="pointNemo.png" alt="pointNmeoMap"></center>
 <p>
-The data included here is sourced from the <a href="https://en.wikipedia.org/wiki/OpenStreetMap" target="wikipedia"> OpenStreetMap</a> project. It has an order of magnitude higher spatial density and coordinate resolution than DCW. However - and unlike DCW - it completely lacks any formal data positional accuracy attestation. What follows should therefore not be considered not as an improvement of the positional accuracy of 1992 published coordinates, but <b>an invitation to anyone</b> that may be in the possession of the coastline coordinates in the surroundings of the three Point Nemo proximity vertices (i.e., the South Pacific islets of Pandora, Motu Nui and Maher) <b>with credible, publicly presented positional accuracy attestation</b> to recalculate the coordinates using the programs on this web‑page and publish the results.
+The data included here is sourced from the
+<a href="https://en.wikipedia.org/wiki/OpenStreetMap"
+target="wikipedia"> OpenStreetMap</a> project. It has an order of
+magnitude higher spatial density and coordinate resolution than DCW.
+However - and unlike DCW - it completely lacks any formal data positional
+accuracy attestation. What follows should therefore not be considered
+not as an improvement of the positional accuracy of 1992 published
+coordinates, but <b>an invitation to anyone</b> that may be in the
+possession of the coastline coordinates in the surroundings of the three
+Point Nemo proximity vertices (i.e., the South Pacific islets of Pandora,
+Motu Nui and Maher) <b>with credible, publicly presented positional
+accuracy attestation</b> to recalculate the coordinates using the
+programs on this web‑page and publish the results.
 
 <h3>Computational Strategy</h3>
 
 <p>
-In addition to calculating a particular set of numbers, the programs presented here are also meant to provide Nemo Library API example code that can be used in other projects. This is the primary reason why the computation is broken into a number of steps, where each step is performed by a separate program. The steps (and programs) are:
+In addition to calculating a particular set of numbers, the programs
+presented here are also meant to provide Nemo Library API example code
+that can be used in other projects. This is the primary reason why the
+computation is broken into a number of steps, where each step is
+performed by a separate program. The steps (and the programs) are:
 
 <ol>
 <li>UniSpherical coordinate data extraction/conversion
@@ -43,24 +64,76 @@ In addition to calculating a particular set of numbers, the programs presented h
 
 <h3>Data extraction</h3>
 <p>
-The first included program is <b>r8bToP8bSelect.c</b> - <a href="r8bToP8bSelect.c" TARGET="source">[source]</a>, <a href="r8bToP8bSelect">[Linux executable]</a> creates a UniSpherical binary coordinate array of coastline points, in this case from a OSM coastline coordinates in a txt file. The program provides the code that can be, probably with very minor modifications, used to extract the coastline data from other sources and create coastline data file <a href="osmPacific.p8b">(<code>osmPacific.p8b</code>)</a> in the format used by <code>pointNemoProximityVertices.c</code> and <code>pointNemoDisqualify.c</code> programs (see below).
+The first included program is <b>r8bToP8bSelect.c</b> -
+<a href="r8bToP8bSelect.c" TARGET="source">[source]</a>,
+<a href="r8bToP8bSelect">[Linux executable]</a> creates a UniSpherical
+binary coordinate array of coastline points, in this case from a OSM
+coastline coordinates in a txt file. The program provides the code that
+can be, probably with very minor modifications, used to extract the
+coastline data from other sources and create coastline data file
+<a href="osmPacific.p8b">(<code>osmPacific.p8b</code>)</a> in the format
+used by <code>pointNemoProximityVertices.c</code> and
+<code>pointNemoDisqualify.c</code> programs (see below).
 
 <h3>Search for proximity vertices</h3>
 <p>
-Using the coastline data file created in the previous step, <b>pointNemoProximityVertices.c</b> - <a href="pointNemoProximityVertices.c" TARGET="source">[source]</a>, <a href="pointNemoProximityVertices">[Linux executable]</a> performs a heuristic search for three costline points that the Point Nemo is equidistant from. In addition, the program determines its  approximate location. The result of the program execution is a three line (one for each proposed coastline point) text file <a href="proximityVertices.pts" TARGET="text"> proximityVertices.pts</a> used as the only input for the next step. (See the extensive preamble in the program source code for details).
+Using the coastline data file created in the previous step,
+<b>pointNemoProximityVertices.c</b> -
+<a href="pointNemoProximityVertices.c" TARGET="source">[source]</a>,
+<a href="pointNemoProximityVertices">[Linux executable]</a> performs
+a heuristic search for three costline points that the Point Nemo is
+equidistant from. In addition, the program determines its  approximate
+location. The result of the program execution is a three line (one for
+each proposed coastline point) text file <a href="proximityVertices.pts"
+TARGET="text"> proximityVertices.pts</a> used as the only input for
+the next step. (See the extensive preamble in the program source code
+for details).
 
 <h3>Iterative trilateration</h3>
 <p>
-The program <b>pointNemoIterate.c</b> - <a href="pointNemoIterate.c" TARGET="source">[source]</a>, <a href="pointNemoIterate">[Linux executable]</a> performs an iterative geodesic trilateration to find the exact location of the <i>geodetic circle</i> defined by three vertices found in the previous step. This center is the presumed (but not certain - see below!) Pint Nemo. The program writes (on the standard output) <a href="pointNemo.pts" TARGET="text"> the&nbsp;solution</a>, consisting of four text lines: the coordinates of the Point Nemo (first line) and (following three lines) of its three proximity vertices (in decimal degrees) and the distances to them (in meters along the geodesics).
+The program <b>pointNemoIterate.c</b> - <a href="pointNemoIterate.c"
+TARGET="source">[source]</a>, <a href="pointNemoIterate">
+[Linux executable]</a> performs an iterative geodesic trilateration to
+find the exact location of the <i>geodetic circle</i> defined by three
+vertices found in the previous step. This center is the presumed (but
+not certain - see below!) Pint Nemo. The program writes (on the standard
+output) <a href="pointNemo.pts" TARGET="text"> the&nbsp;solution</a>,
+consisting of four text lines: the coordinates of the Point Nemo
+(first line) and (following three lines) of its three proximity
+vertices (in decimal degrees) and the distances to them (in meters
+along the geodesics).
 
 <h3>Attempt to disqulify a proposed solution</h3>
 <p>
-The result of the calculation carried out so far is only a <i>possible</i> (or <i>proposed</i>) solution the ellipsoidal geometry problem considered here: There is no method to <i>prove</i> the proposed solution is correct. It is however trivially simple to disqualify an erroneous proposed solution.
+The result of the calculation carried out so far is only a
+<i>possible</i> (or <i>proposed</i>) solution the ellipsoidal geometry
+problem considered here: There is no method to <i>prove</i> the proposed
+solution is correct. It is however trivially simple to disqualify an
+erroneous proposed solution.
 <p>
-The program <b>pointNemoDisqualify.c</b> - <a href="pointNemoDisqualify.c" TARGET="source">[source]</a>, <a href="pointNemoDisqualify">[Linux executable]</a> performs this function by traversing all coastline vertices, calculating their geodesic distances from the proposed Point Nemo. The solution is disqualified either by finding fewer than three points at the claimed Point Nemo distance, or by finding one (or more) vertices that are closer to Point Nemo than the claimed solution distance. Consequently, a solution may be considered correct only <b>pending another proposed solution</b> (with the same coastline coordinate data) with greater Point Nemo distance (i.e., a "longer swim") <b>which passes the disqualification test</b> performed by this program. The program writes a
-<a href="disqualification.text" target="text"> (dis)qualification report</a> that consists of one line for each point on the coastline at the claimed distance and closer (with an epsilon introduced by the finite resolution of the coastline point coordinates, typically lower than the precision of the computational engine).
+The program <b>pointNemoDisqualify.c</b> -
+<a href="pointNemoDisqualify.c" TARGET="source">[source]</a>,
+<a href="pointNemoDisqualify">[Linux executable]</a> performs this
+function by traversing all coastline vertices, calculating their
+geodesic distances from the proposed Point Nemo. The solution is
+disqualified either by finding fewer than three points at the claimed
+Point Nemo distance, or by finding one (or more) vertices that are
+closer to Point Nemo than the claimed solution distance. Consequently,
+a solution may be considered correct only <b>pending another proposed
+solution</b> (with the same coastline coordinate data) with greater
+Point Nemo distance (i.e., a "longer swim") <b>which passes the
+disqualification test</b> performed by this program. The program writes
+a <a href="disqualification.text" target="text"> (dis)qualification
+report</a> that consists of one line for each point on the coastline
+at the claimed distance and closer (with an epsilon introduced by the
+finite resolution of the coastline point coordinates, typically lower
+than the precision of the computational engine).
 <p>
-The computation carried out by this program is <b>completely independent</b> of the method (here embodied in the three previous steps) used to calculate the Point Nemo coordinates. It is therefore applicable to any proposed solution in combination with the coastline coordinate data used to derive it.
+The computation carried out by this program is <b>completely
+independent</b> of the method (here embodied in the three previous
+steps) used to calculate the Point Nemo coordinates. It is therefore
+applicable to any proposed solution in combination with the coastline
+coordinate data used to derive it.
 
 <hr>
 
